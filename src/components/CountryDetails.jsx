@@ -1,27 +1,22 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
-function CountryDetails(props) {
-  const [foundCountry, setFoundCountry] = useState([]);
+function CountryDetails() {
+  //const [foundCountry, setFoundCountry] = useState([]);
+  const location = useLocation();
+  const { countryObj } = location.state;
+  console.log(countryObj);
 
-  const { countries } = props;
-  console.log(countries);
   const { alpha3code } = useParams();
   console.log(alpha3code);
 
-  const foundCountryFunc = countries.filter((el) => {
-    console.log(el.name.common);
-    console.log(el.alpha3Code);
-    return el.alpha3Code === alpha3code;
-  });
-  console.log(foundCountryFunc);
-  setFoundCountry(foundCountryFunc);
-
+  console.log('found country is: ' + countryObj.name.official);
   return (
     <div>
-      <h1>Welcome to: {foundCountry.name.common}</h1>CountryDetails:
-      {foundCountry.region}
+      <h1>Welcome to: {countryObj.name.official}</h1>CountryDetails:
+      {countryObj.region}
     </div>
   );
 }
